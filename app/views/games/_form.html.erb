@@ -1,0 +1,30 @@
+<%= form_tag('/games') do %>
+
+  <div class="error">
+    <% @game.errors.full_messages.each do |msg| %>
+      <p>Error: <%= msg %></p>
+    <% end %>
+  </div>
+
+
+  <fieldset>
+    <%= label_tag :player_1, "Player 1:"%>
+    <%= text_field_tag :player_1 %>
+  </fieldset>
+  <fieldset>
+    <%= label_tag :player_2, "Player 2:"%>
+    <%= text_field_tag :player_2 %>
+  </fieldset>
+  <fieldset>
+    <%= label_tag :player_3, "Player 3:"%>
+    <%= text_field_tag :player_3 %>
+  </fieldset>
+  <fieldset>
+    <%= label_tag :player_4, "Player 4:"%>
+    <%= text_field_tag :player_4 %>
+  </fieldset>
+
+  <div class="actions">
+    <%= submit_tag %>
+  </div>
+<% end %>

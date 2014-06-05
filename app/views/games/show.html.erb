@@ -1,0 +1,82 @@
+<p id="notice"><%= notice %></p>
+
+Players:
+<% @game.players.each_with_index do |player, index| %>
+  <br/>
+  <%= "Player #{index + 1}: #{player.name}" %>
+<% end %>
+
+<div class="error">
+  <% @game.errors.full_messages.each do |msg| %>
+    <p>Error: <%= msg %></p>
+  <% end %>
+</div>
+
+<br>
+
+Progress so far:
+
+<% @game.players.each do |player| %>
+
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>Total</th>
+      <th>Grand Total</th>
+    </tr>
+
+    <tr>
+      <th><%= player.name %></th>
+    </tr>
+
+    <% player.frames.each do |frame| %>
+      <tr>
+        <td></td>
+        <td><%= frame.first_score %></td>
+        <td><%= frame.second_score %></td>
+        <td><%= frame.third_score %></td>
+        <td><%= frame.total_score  %>
+        <td><%= player.grand_total_for_frame(frame.position) %>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+
+<% @game.players.each do |player| %>
+  <hr>
+
+  <% if !player.finished? %>
+    New frame for <%= player.name %>:
+    <%= form_tag('/frames') do %>
+      <%= hidden_field_tag :player_id, player.id %>
+      <fieldset>
+        <%= label_tag :first_score, "First score:"%>
+        <%= text_field_tag :first_score %>
+      </fieldset>
+      <fieldset>
+        <%= label_tag :second_score, "Second score:"%>
+        <%= text_field_tag :second_score %>
+      </fieldset>
+
+      <% if player.on_final_frame? %>
+        <fieldset>
+          <%= label_tag :third_score, "Third score:"%>
+          <%= text_field_tag :third_score %>
+        </fieldset>
+      <% end %>
+
+      <div class="actions">
+        <%= submit_tag %>
+      </div>
+    <% end %>
+
+  <% else %>
+    <%= player.name %> has finished! Final score: <%= player.grand_total_for_frame(10) %>
+  <% end %>
+<% end %>
+<br/>
+
+<%= link_to 'Back', root_path %>

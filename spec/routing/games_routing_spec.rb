@@ -1,0 +1,23 @@
+require "rails_helper"
+
+RSpec.describe GamesController, :type => :routing do
+  describe "routing" do
+
+    it "routes to #new" do
+      expect(:get => "/games/new").to route_to("games#new")
+    end
+
+    it "routes to #show" do
+      expect(:get => "/games/1").to route_to("games#show", :id => "1")
+    end
+
+    it "routes to #create" do
+      expect(:post => "/games").to route_to("games#create")
+    end
+
+    it "routes to #destroy" do
+      expect(:delete => "/games/1").to route_to("games#destroy", :id => "1")
+    end
+
+  end
+end
